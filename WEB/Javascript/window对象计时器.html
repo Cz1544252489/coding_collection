@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script type="text/javascript">
+	function openwindow(){
+	window.open("http://www.baidu.com","_blank","width:600px,height:400px")
+}
+  var attime;
+  function clock(){
+    var time=new Date();          
+    attime=[time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()];
+    document.getElementById("clock").value = attime;
+  }
+  var i=setInterval(clock,100);
+  var num=0;
+  function startCount() {
+    document.getElementById('count').value=num;
+    num=num+1;
+    setTimeout("startCount()",1000) 
+  }
+  setTimeout("startCount()",1000) 
+
+</script>
+</head>
+
+<body>
+<input type="button" value="点击我，打开新窗口"  onclick="openwindow()"/>
+<input type="text" id="clock" size="50"  />
+<input type="button" id="button" value="停止" onclick="clearInterval(i)" />
+<input type="text" id="count" />
+
+</body>
+</html>

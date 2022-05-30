@@ -1,0 +1,202 @@
+<html>
+
+<head>
+    <title>sudoku</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <script>
+                document.write("<th width=\"22px\"></th>");
+                for(var i=1;i<=9;i++) document.write("<th width=\"22px\">"+i.toString()+"</th>");
+            </script>
+        </tr>
+        <script>
+            for(var i=1;i<=9;i++) {
+                document.write("<tr><td>"+i.toString()+"</td>");
+            	for(var j=1;j<=9;j++) document.write("<td><input οnfοcus=\"this.value='';\" style=\"width:22px\" id="+i.toString()+j.toString()+"></td>");
+                document.write("</tr>");
+            }
+        </script>
+    </table>
+    <button type="button" id="solve">运行</button>
+    <button type="reset" id="reset">重置</button>
+    <!-- <button type="button" οnclick="solve();">
+        <input type="button" οnclick="reset();"> -->
+        <p id="staut"></p>
+        <script>
+            var fas, hang, lie, jg, gg;
+            jg = new Array(
+                new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                new Array(0, 1, 1, 1, 2, 2, 2, 3, 3, 3),
+                new Array(0, 1, 1, 1, 2, 2, 2, 3, 3, 3),
+                new Array(0, 1, 1, 1, 2, 2, 2, 3, 3, 3),
+                new Array(0, 4, 4, 4, 5, 5, 5, 6, 6, 6),
+                new Array(0, 4, 4, 4, 5, 5, 5, 6, 6, 6),
+                new Array(0, 4, 4, 4, 5, 5, 5, 6, 6, 6),
+                new Array(0, 7, 7, 7, 8, 8, 8, 9, 9, 9),
+                new Array(0, 7, 7, 7, 8, 8, 8, 9, 9, 9),
+                new Array(0, 7, 7, 7, 8, 8, 8, 9, 9, 9),
+            );
+
+            function show(str) {
+                document.getElementById("staut").innerHTML = str;
+            }
+
+            function clear() {
+                fas = new Array();
+                hang = new Array();
+                lie = new Array();
+                gg = new Array();
+                for (var i = 1; i <= 9; i++) {
+                    fas[i] = new Array();
+                    hang[i] = new Array();
+                    lie[i] = new Array();
+                    gg[i] = new Array();
+                    for (var j = 1; j <= 9; j++) {
+                        fas[i][j] = 9;
+                        hang[i][j] = 0;
+                        gg[i][j] = 0;
+                        lie[i][j] = 0;
+                        if (!document.getElementById(i.toString() + j.toString()).value) document.getElementById(i.toString() + j.toString()).value = 0;
+                        document.getElementById(i.toString() + j.toString()).value = parseInt(document.getElementById(i.toString() + j.toString()).value, 10) % 10;
+                    }
+                }
+            }
+
+            function add(x, y, z) {
+                // 当前在 (x, y) 处的值为 z
+                var stx = Math.floor((x - 1) / 3) * 3 + 1; // 所在格子的第一行
+                var sty = Math.floor((y - 1) / 3) * 3 + 1; // 所在格子的第一列
+                // 遍历所在的格子
+                for (var i = stx; i <= stx + 2; i++) {
+                    for (var j = sty; j <= sty + 2; j++) {
+                        // 该行该列都没有 z 这个数
+                        if (hang[i][z] == 0 && lie[j][z] == 0) {
+                            fas[i][j]--;
+                        }
+                    }
+                }
+
+                // 遍历所在行
+                for (var i = 1; i <= 9; i++) {
+                    // 不在同一个格子且没有这个数的
+                    if (jg[i][y] != jg[x][y] && hang[i][z] == 0) fas[i][y]--;
+                }
+
+                // 遍历所在列
+                for (var i = 1; i <= 9; i++) {
+                    // 不在同一个格子且没有这个数的
+                    if (jg[x][i] != jg[x][y] && lie[i][z] == 0) fas[x][i]--;
+                }
+                // 在 hang, lie, gg 中存入这个数
+                hang[x][z] = 1;
+                lie[y][z] = 1;
+                gg[jg[x][y]][z] = 1;
+                // 让(x,y)显示z
+                document.getElementById(x.toString() + y.toString()).value = z;
+            }
+
+            function del(x, y, z) {
+                hang[x][z] = 0;
+                lie[y][z] = 0;
+                gg[jg[x][y]][z] = 0;
+                document.getElementById(x.toString() + y.toString()).value = 0;
+                var stx = Math.floor((x - 1) / 3) * 3 + 1;
+                var sty = Math.floor((y - 1) / 3) * 3 + 1;
+                for (var i = stx; i <= stx + 2; i++)
+                    for (var j = sty; j <= sty + 2; j++)
+                        if (hang[i][z] == 0 && lie[j][z] == 0) fas[i][j]++;
+                for (var i = 1; i <= 9; i++)
+                    if (jg[i][y] != jg[x][y] && hang[i][z] == 0) fas[i][y]++;
+                for (var i = 1; i <= 9; i++)
+                    if (jg[x][i] != jg[x][y] && lie[i][z] == 0) fas[x][i]++;
+
+            }
+
+            function dfs(deep) {
+                // 递归终点
+                if (deep == 0) {
+                    return true;
+                }
+                var mx = 0
+                var my = 0
+                var mfas = 10
+                // 找到可能数最少的一个 0 格子
+                // mx my记录下标
+                // mfas 记录可能数的数量
+                for (var i = 1; i <= 9; i++) {
+                    for (var j = 1; j <= 9; j++) {
+                        if (document.getElementById(i.toString() + j.toString()).value == 0 && fas[i][j] < mfas) {
+                            mx = i;
+                            my = j;
+                            mfas = fas[i][j];
+                        }
+                    }
+                }
+                if (mfas == 10) {
+                    return false;
+                }
+                for (var i = 1; i <= 9; i++) {
+                    // 如果该格子所在行、列、Cell 都不存在 i 这个数
+                    if (hang[mx][i] == 0 && lie[my][i] == 0 && gg[jg[mx][my]][i] == 0) {
+                        add(mx, my, i); // 填入 i
+                        if (dfs(deep - 1) == true) {
+                            // 在填入 i 的基础上如果递归成功，则返回
+                            return true;
+                        }
+                        // 递归不成功，将 i 抹掉
+                        del(mx, my, i);
+                    }
+                }
+                return false;
+            }
+
+            function solve() {
+                console.log("click!");
+                show("solving");
+                clear();
+                var sl = 0;
+                var yj = true;
+                // 记录所有已有的数
+                for (var i = 1; i <= 9; i++) {
+                    for (var j = 1; j <= 9; j++) {
+                        if (document.getElementById(i.toString() + j.toString()).value != 0) {
+                            var vue = document.getElementById(i.toString() + j.toString()).value;
+                            // !=0 代表存在这个数
+                            // ==0 代表没有这个数
+                            if (hang[i][vue] != 0 || lie[j][vue] != 0 || gg[jg[i][j]][vue] != 0) {
+                                // 如果该值已经存在，说明矛盾，无解
+                                yj = false;
+                            }
+                            add(i, j, vue);
+                        } else {
+                            // 记录剩余的空
+                            sl++;
+                        }
+                    }
+                }
+                // 不冲突 且 递归成功
+                if (yj && dfs(sl)) {
+                    show("Done!");
+                } else {
+                    show("No solution");
+                }
+            }
+
+            function reset() {
+                for (var i = 1; i <= 9; i++) {
+                    for (var j = 1; j <= 9; j++) {
+                        document.getElementById(i.toString() + j.toString()).value = 0;
+                    }
+                }
+            }
+            document.querySelector("#solve").addEventListener("click", function() {
+                solve()
+            })
+            document.querySelector("#reset").addEventListener("click", function() {
+                reset()
+            })
+        </script>
+</body>

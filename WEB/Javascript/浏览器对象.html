@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>浏览器对象</title>  
+  <meta http-equiv="Content-Type" content="text/html; charset=gkb"/>   
+ </head>
+ <body>
+  <!--先编写好网页布局-->
+  <div class="header">
+     <table class="caozuo"><strong>操作成功</strong></table>
+    </div>
+    <div>
+        <p>
+            <input id="seconds"/>秒后<p class="pp">进入页面</p>
+        </p>
+     <form>      
+    <input type="text" id="href" value="http://www.baidu.com"/> 
+    <input type="button"  value="进入界面" id="goahead" onclick="startCount()" />
+     <input type="button"  value="返回界面" id="goback" onclick="startCount()" />            
+    </form>
+    </div>
+  <script type="text/javascript">  
+    var num=5;
+  function startCount() {
+    document.getElementById('seconds').value=num;
+    num=num-1;
+	if(num>-1){
+    setTimeout("startCount()",1000)
+	}
+  }
+   //获取显示秒数的元素，通过定时器来更改秒数。
+	function gotohref(){
+	if(num==0){
+		window.location.href=document.getElementById('href').value;
+		}	
+	function gobackhref(){
+	{
+		window.history.go(-1);
+	}
+	}
+	}
+	var len=history.length;
+	document.write(len);
+   //通过window的location和history对象来控制网页的跳转。
+   </script>
+</body>
+</html>
