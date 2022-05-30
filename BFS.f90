@@ -3,14 +3,14 @@ program main
     
     integer,parameter :: n=4000
     real,parameter :: p=0.1
-    integer :: i,j,k,visit0,start,level       !level±íÊ¾²ã¼¶£¬¼´µ½¸ù½ÚµãµÄ×î¶Ì¾àÀë
+    integer :: i,j,k,visit0,start,level       !levelè¡¨ç¤ºå±‚çº§ï¼Œå³åˆ°æ ¹èŠ‚ç‚¹çš„æœ€çŸ­è·ç¦»
     integer :: kaver=4
     integer :: degree(n),edge(n,n),length(n,n),temp(n,n)
     real :: rand,averlen
     integer :: count,count0,count1,count2,flag
     
-    integer,pointer :: Q=>null()   !¶ÓÁĞ
-    integer,target :: visit(n)   !ÒÑ¾­É¨Ãè¹ıµÄµã
+    integer,pointer :: Q=>null()   !é˜Ÿåˆ—
+    integer,target :: visit(n)   !å·²ç»æ‰«æè¿‡çš„ç‚¹
     
     open(7,file="length.txt")
     open(666,file="temp.txt")
@@ -37,40 +37,40 @@ program main
         enddo
     enddo
     
-    !ÀûÓÃBFSËã·¨Çó×î¶ÌÂ·³¤
-    do start=1,n        !ÆğÊ¼µã
+    !åˆ©ç”¨BFSç®—æ³•æ±‚æœ€çŸ­è·¯é•¿
+    do start=1,n        !èµ·å§‹ç‚¹
         do i=1,n
             visit(i)=0
         enddo
-        level=1                     !²ãÊı¼°¸Ãµãµ½ÆğÊ¼µãµÄ×î¶Ì¾àÀë                   
+        level=1                     !å±‚æ•°åŠè¯¥ç‚¹åˆ°èµ·å§‹ç‚¹çš„æœ€çŸ­è·ç¦»                   
         visit(1)=start
         visit0=2
-        Q=>visit(1)                 !Ö¸ÕëÖ¸ÏòÆğÊ¼µã
+        Q=>visit(1)                 !æŒ‡é’ˆæŒ‡å‘èµ·å§‹ç‚¹
             count=1
             do i=1,n           
-                flag=0                  !½ÓÏÂÀ´4ĞĞ±£Ö¤²»»áÑ¡µ½ÖØ¸´µÄµã 
+                flag=0                  !æ¥ä¸‹æ¥4è¡Œä¿è¯ä¸ä¼šé€‰åˆ°é‡å¤çš„ç‚¹ 
                 do j=1,visit0       
                     if(i==visit(j)) flag=1
                 enddo
                 if(edge(i,Q)==1 .and. flag==0)then
-                    visit(visit0)=i     !visitµÄ¼ÆÊıÆ÷Îªvisit0
+                    visit(visit0)=i     !visitçš„è®¡æ•°å™¨ä¸ºvisit0
                     length(i,start)=level
                     length(start,i)=level
                     count=count+1       
                     visit0=visit0+1
                 endif
-            enddo                       !×îºóµÄcountµÄÖµ¾ÍÊÇ´Ë²ãµÄ³¤¶È
-        do while(.true.)     !µ±visitÖĞÔªËØ³¬¹ınÊ±Ìø³öÑ­»·
+            enddo                       !æœ€åçš„countçš„å€¼å°±æ˜¯æ­¤å±‚çš„é•¿åº¦
+        do while(.true.)     !å½“visitä¸­å…ƒç´ è¶…è¿‡næ—¶è·³å‡ºå¾ªç¯
             level=level+1
-           do count1=visit0-count+1,visit0                    !Ä³Ò»²ãµÄÆğµã
+           do count1=visit0-count+1,visit0                    !æŸä¸€å±‚çš„èµ·ç‚¹
                 Q=>visit(count1)
                 do i=1,n
-                    flag=0                  !½ÓÏÂÀ´4ĞĞ±£Ö¤²»»áÑ¡µ½ÖØ¸´µÄµã 
+                    flag=0                  !æ¥ä¸‹æ¥4è¡Œä¿è¯ä¸ä¼šé€‰åˆ°é‡å¤çš„ç‚¹ 
                     do j=1,visit0       
                         if(i==visit(j)) flag=1
                     enddo
                     if(edge(i,Q)==1 .and. flag==0)then
-                        visit(visit0)=i     !visitµÄ¼ÆÊıÆ÷Îªvisit0
+                        visit(visit0)=i     !visitçš„è®¡æ•°å™¨ä¸ºvisit0
                         length(i,start)=level
                         length(start,i)=level
                         count=count+1       
@@ -84,10 +84,10 @@ program main
         enddo
     !do k=1,n
     !    do i=1,n
-    !        if(length(i,k)<n .and. i/=k) then       !µãiµ½kµÄ¾àÀëĞ¡ÓÚnÔò¸üĞÂ¾àÀë
+    !        if(length(i,k)<n .and. i/=k) then       !ç‚¹iåˆ°kçš„è·ç¦»å°äºnåˆ™æ›´æ–°è·ç¦»
     !            do j=1,n
     !                if(length(k,j)<n .and. k/=j .and. j/=i)then
-    !                    if(length(i,k)+length(k,j)<length(i,j))then     !ÓĞ¸ü¶ÌµÄÂ·¾¶Ê±¸üĞÂ
+    !                    if(length(i,k)+length(k,j)<length(i,j))then     !æœ‰æ›´çŸ­çš„è·¯å¾„æ—¶æ›´æ–°
     !                        length(i,j)=length(i,k)+length(k,j)
     !                    endif
     !                endif
