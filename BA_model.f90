@@ -3,10 +3,10 @@ program main
     integer,parameter :: n=200
     integer :: edge(n,n),degree(n),state(n),sum_(n)
     integer :: i,j,m,count1,count2
-    integer :: idum,m0  !ÖÖ×Óidum
+    integer :: idum,m0  !ç§å­idum
     real :: f,rand
     
-    !³õÊ¼»¯
+    !åˆå§‹åŒ–
     do i=1,m
         if(i<m)then
             degree(i)=2
@@ -19,7 +19,7 @@ program main
         endif
     enddo
     
-    !Ñİ»¯
+    !æ¼”åŒ–
     idum=10
     call random_seed(idum)
     do i=m+1,n
@@ -35,7 +35,7 @@ program main
             count1=count1+degree(i)
             sum_(j+1)=count1
         enddo
-        count2=0  !¼ÇÂ¼Á¬±ßÊı
+        count2=0  !è®°å½•è¿è¾¹æ•°
         call random_number(rand)
 100     f=rand*count1
         do j=1,i-1
