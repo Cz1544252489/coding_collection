@@ -42,7 +42,7 @@ sudo apt-get install -f -y ./wps-office_11.1.0.10702_amd64.deb
 sudo apt-get install -f -y ./baidunetdisk_3.5.0_amd64.deb
 
 # MATLAB
-echo '看硬盘 陈卓0.o下: ubuntu部分软件安装包/MATLAB文件夹，并进入。'
+
 echo '或者使用MathWorks公司的正版安装'
 
 
@@ -54,7 +54,7 @@ sudo apt install git
 
 # VS code
 echo '避免使用snap中的vs code因为其无法输入中文'
-echo '看硬盘 陈卓0.o下: ubuntu部分软件安装包/VS code 文件夹，并进入。'
+
 echo '使用安装代码： '
 echo 'sudo dpkg -i code_1.63.2-1639562499_amd64.deb'
 
