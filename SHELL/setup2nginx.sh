@@ -71,7 +71,7 @@ ufw enable && ufw allow 80 && ufw allow 443;
 #配置文件
 sed -i '116a \t include vhost/*.conf;' /home/nginx/conf/nginx.conf;
 mkdir /home/nginx/conf/vhost;
-echo -e 'server { \n\t listen 80; \n\t server_name banyun.cz123.top; \n\t root /home/cz; \n\t location ~ { \n\t\t charset utf-8; \n\t\t index index.html NON_EXISTENT_FILE; \n\t\t autoindex on; \n\t\t autoindex_exact_size off; \n\t\t autoindex_localtime on; \n\t } \n }' > /home/nginx/conf/vhost/cz123.top.conf;
+echo -e 'server { \n\t listen 80; \n\t server_name sample.xxx; \n\t root /home/cz; \n\t location ~ { \n\t\t charset utf-8; \n\t\t index index.html NON_EXISTENT_FILE; \n\t\t autoindex on; \n\t\t autoindex_exact_size off; \n\t\t autoindex_localtime on; \n\t } \n }' > /home/nginx/conf/vhost/sample.xxx;
 
 ########################################################################
 #安装ssl
