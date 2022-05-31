@@ -67,7 +67,7 @@ apt -y install mariadb-server;
 #查看是否安装好
 mysqladmin --version;
 #设置密码
-mysqladmin -u root password 1544252489;
+mysqladmin -u root password ***;
 
 #############################################################################
 
@@ -96,11 +96,8 @@ cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf;
 sed -i 's/NONE\///' /usr/local/etc/php-fpm.conf; 
 #或使用  sed -i '143c include=etc/php-fpm.d/*.conf' /usr/local/etc/php-fpm.conf; 
 
-#cd /home/nginx/conf;
-#rm /home/nginx/conf/nginx.conf && wget https://homepage.miraclezhuo.cn/download/nginx.conf;
-#mkdir vhost;
 
-echo -e "server {\n\t listen 80;\n\t server_name cz729.xyz;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" > cz729.xyz.conf;
+echo -e "server {\n\t listen 80;\n\t server_name sample.xxx;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" > sample.xxx;
 
 /home/nginx/sbin/nginx -s reload && /usr/local/bin/php-fpm;
 
