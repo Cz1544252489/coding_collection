@@ -19,7 +19,7 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted unive
 echo "deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse" >> /etc/apt/sources.list;
 echo "deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list;
 echo "deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list;
-apt update -y && apt upgrade -y;
+apt-get update -y && apt-get upgrade -y;
 
 #安装 make
 apt install -y make
