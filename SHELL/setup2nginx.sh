@@ -21,7 +21,8 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted univ
 echo "deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list;
 apt update -y && apt upgrade -y;
 
-
+#安装 make
+apt install -y make
 #安装 vim
 apt install -y vim;
 if [ ! -d /etc/vim/vimrc ]; then
