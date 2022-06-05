@@ -20,7 +20,7 @@ apt install -y lynx;
 #################################################################################
 
 #安装nginx前提包
-apt -y install gcc libssl-dev zlib1g zlib1g-dev libpcre3 libpcre3-dev; 
+apt install -y gcc libssl-dev zlib1g zlib1g-dev libpcre3 libpcre3-dev; 
 
 cd /home;
 if [ ! -d cz ] ; then 
@@ -51,7 +51,7 @@ sed -i '/error.log\;/{s/#//}' /home/nginx/conf/nginx.conf;  #预期改变第5行
 sed -i '/main/{s/#//}' /home/nginx/conf/nginx.conf;  #预期改变第21,25,41行
 sed -i '/status/{s/#//}' /home/nginx/conf/nginx.conf;  #预期改变第22行
 sed -i '/http_user_agent/{s/#//}' /home/nginx/conf/nginx.conf; #预期改变第23行
-sed -i '116c \\t include vhost\/\*\.conf' /home/nginx/conf/nginx.conf;  #预期改变第116行
+sed -i '116c \\t include vhost\/\*\.conf;' /home/nginx/conf/nginx.conf;  #预期改变第116行
 
 /home/nginx/sbin/nginx;
 cd;
