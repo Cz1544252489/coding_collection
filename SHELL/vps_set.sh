@@ -56,8 +56,6 @@ sed -i '116c \\t include vhost\/\*\.conf;' /home/nginx/conf/nginx.conf;  #预期
 /home/nginx/sbin/nginx;
 cd;
 
-
-
 #ufw enable && ufw allow 80 && ufw allow 443;
 
 #############################################################################
@@ -82,8 +80,6 @@ apt install -y libcurl4-openssl-dev;
 cd php-7.4.28/ && ./configure --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd;
 make && make install;
 
-cd /root;
-
 cp php.ini-development /usr/local/php/php.ini; 
 #修改文件
 sed -i '798c cgi.fix_pathinfo=0' /usr/local/php/php.ini; 
@@ -96,11 +92,12 @@ cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf;
 sed -i 's/NONE\///' /usr/local/etc/php-fpm.conf; 
 #或使用  sed -i '143c include=etc/php-fpm.d/*.conf' /usr/local/etc/php-fpm.conf; 
 
-
-echo -e "server {\n\t listen 80;\n\t server_name sample.xxx;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" > sample.xxx;
+cd /home/nginx/conf && mkdir vhost && cd vhost;
+# 下面这一行中需要把 sample.xxx 修改为自己的域名
+echo -e "server {\n\t listen 80;\n\t server_name sample.xxx;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" > sample.xxx.conf;
 
 /home/nginx/sbin/nginx -s reload && /usr/local/bin/php-fpm;
 
-echo "<?php phpinfo();?>" >> /home/cz/index/php;
+echo "<?php phpinfo();?>" >> /home/cz/index.php;
 
 
