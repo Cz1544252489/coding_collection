@@ -97,7 +97,7 @@ sed -i 's/NONE\///' /usr/local/etc/php-fpm.conf;
 
 cd /home/nginx/conf && mkdir vhost && cd vhost;
 # 下面这一行中需要把 sample.xxx 修改为自己的域名
-echo -e "server {\n\t listen 80;\n\t server_name sample.xxx www.sample.xxx;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" > sample.xxx.conf;
+echo -e "server {\n\t listen 80;\n\t server_name sample.xxx www.sample.xxx;\n\t root /home/cz;\n\t location ~ { \n\t\t index index.php index.html index.htm;\n\t } \n\t location ~* \.php$ { \n\t\t root /home/cz;\n\t\t fastcgi_index\t index.php;\n\t\t fastcgi_pass\t 127.0.0.1:9000;\n\t\t include\t\t fastcgi_params;\n\t\t fastcgi_param\t SCRIPT_FILENAME\t\$document_root\$fastcgi_script_name;\n\t\t fastcgi_param\t SCRIPT_NAME\t\$fastcgi_script_name;\n\t } \n }" >> sample.xxx.conf;
 
 /home/nginx/sbin/nginx -s reload && /usr/local/bin/php-fpm;
 
