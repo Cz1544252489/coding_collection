@@ -5,7 +5,7 @@
 
 apt -y update && apt -y upgrade;
 
-#一台国外vps 从开始到安装配置完nginx,mysql,php
+#一台vps 从开始到安装配置完nginx,mysql,php
 
 #安装 vim
 apt install -y vim;
@@ -31,6 +31,7 @@ mkdir nginx && cd nginx && mkdir sbin conf logs;
 cd /root;
 
 #安装nginx并配置文件
+#若wget下载速度太慢可以从其他渠道下载后使用WinScp上传到服务器
 wget https://nginx.org/download/nginx-1.20.2.tar.gz && tar -zxvf nginx-1.20.2.tar.gz && rm nginx-1.20.2.tar.gz;
 cd nginx-1.20.2;
 ./configure  --user=www --group=www --prefix=/home/nginx --sbin-path=/home/nginx/sbin/nginx --conf-path=/home/nginx/conf/nginx.conf --error-log-path=/home/nginx/logs/error.log --http-log-path=/home/nginx/logs/access.log --pid-path=/home/nginx/logs/nginx.pid --with-http_ssl_module
@@ -71,6 +72,7 @@ mysqladmin -u root password ***;
 
 #安装php
 cd /root;
+#若wget下载速度太慢可以从其他渠道下载后使用WinScp上传到服务器
 wget https://www.php.net/distributions/php-7.4.28.tar.gz;
 
 tar zxvf php-7.4.28.tar.gz;
