@@ -29,10 +29,10 @@ sudo apt-get -y install network-manager-openvpn network-manager-openvpn-gnome re
 
 
 #wine then sougou,ps6,qq,wechat,wps-office,baidudisk
-echo '看硬盘 陈卓0.o下: ubuntu部分软件安装包/wine_db文件夹，并进入。'
+echo '看硬盘 下: ubuntu部分软件安装包/wine_db文件夹，并进入。'
 echo '使用安装代码： '
 echo 'sudo dpkg -i *.deb'
-cd /media/zn/陈卓0.o/wine_deb/
+cd /media/zn/**0.o/wine_deb/
 sudo apt-get install -f -y ./ukylin-wine_70.6.3.25_amd64.deb
 sudo apt-get install -f -y ./sogoupinyin_2.4.0.3469_amd64.deb
 sudo apt-get install -f -y ./ukylin-ps6_1.0_amd64.deb
