@@ -4,12 +4,18 @@
 local_ip="192.168.100.1"      # 路由器
 china_ip="baidu.com"
 server_ip="192.168.194.12"    # Zerotier 虚拟内网服务器
+log_file="./ping.log"
 
+# 输出日期时间
+
+date | tee -a $log_file
 # 输出表头
-printf "%-25s %-25s %-25s\n" "Router($local_ip)" "Baidu($china_ip)" "Server($server_ip)"
+printf "%-25s %-25s %-25s\n" "Router($local_ip)" "Baidu($china_ip)" "Server($server_ip)" | tee -a $log_file
 echo "-------------------------------------------------------------------------------"
 
 i=0
+changeTime=-1
+localIP=""
 # 无限循环
 while true; do
     # 分别获取三次 ping 的延迟
@@ -23,11 +29,15 @@ while true; do
     [[ -z "$ping3" ]] && ping3="timeout"
 
     # 打印一行结果
-    printf "%-5s %-25s %-25s %-25s\n" "$i" "$ping1" "$ping2" "$ping3"
+    printf "%-5s %-25s %-25s %-25s\n" "$i" "$ping1" "$ping2" "$ping3" | tee -a $log_file
 	((i++))
 	if (( i% 5 ==0)); then
 		IP=$(curl -s cip.cc | grep IP | sed -e 's/^.*: //');
-		printf "%-5s ----- %-25s --------------\n" "$i" "$IP"
+		if [ "$IP" != "$localIP" ]; then
+			((changeTime++))
+			localIP=$IP
+		fi
+		printf "%-5s ----- %-25s --- %-3s--------\n" "$i" "$IP" "$changeTime" | tee -a $log_file
 	fi
     sleep 1
 done
