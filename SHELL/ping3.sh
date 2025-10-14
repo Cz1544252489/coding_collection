@@ -31,9 +31,9 @@ while true; do
     # 打印一行结果
     printf "%-5s %-25s %-25s %-25s\n" "$i" "$ping1" "$ping2" "$ping3" | tee -a $log_file
 	((i++))
-	if (( i% 5 ==0)); then
+	if (( i% 5 ==0)) ; then
 		IP=$(curl -s cip.cc | grep IP | sed -e 's/^.*: //');
-		if [ "$IP" != "$localIP" ]; then
+		if [[ -n "$IP" && "$IP" != "$localIP" ]]; then
 			((changeTime++))
 			localIP=$IP
 		fi
